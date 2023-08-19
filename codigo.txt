@@ -1,0 +1,50 @@
+    <!-- CURSOR -->
+    <a-entity id="camera-cursor" cursor position="0 0 -1"
+    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: #fff; shader: flat">
+  </a-entity>    
+------------------------------------------------------------------------------------------------------------------
+    schema: {
+        selectedItemId: { default: "", type: "string" },
+      },
+      handlePlacesListState: function () {
+      },
+----------------------------------------------------------------------------------------------
+        const id = this.el.getAttribute("id");
+        const placesId = ["taj-mahal", "budapest", "new-york-city", "eiffel-tower"];
+        if (placesId.includes(id)) {
+          const placeContainer = document.querySelector("#places-container");
+          placeContainer.setAttribute("cursor-listener", {
+            selectedItemId: id,
+          });
+          this.el.setAttribute("material", {
+            color: "#D76B30",
+            opacity: 1,
+          });
+        }
+----------------------------------------------------------------------------------------
+      handleMouseEnterEvents: function () {
+        // Evento 'mouseenter' del cursor.
+        this.el.addEventListener("mouseenter", () => {
+          this.handlePlacesListState();
+        });
+      },
+----------------------------------------------------------------------------
+     // Evento 'mouseleave' del cursor.
+    this.el.addEventListener("mouseleave", () => {
+        const { selectedItemId } = this.data;
+        if (selectedItemId) {
+          const el = document.querySelector(`#${selectedItemId}`);
+          const id = el.getAttribute("id");
+          if (id == selectedItemId) {
+            el.setAttribute("material", {
+              color: "#0077CC",
+              opacity: 1,
+            });
+          }
+        }
+      });
+-----------------------------------------------------------------------------
+      init: function () {
+        this.handleMouseEnterEvents();
+        this.handleMouseLeaveEvents();
+      },
